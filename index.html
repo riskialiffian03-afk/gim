@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini Game Tangkap Kotak</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            background: #111;
+            color: white;
+        }
+
+        #gameArea {
+            width: 400px;
+            height: 400px;
+            background: #222;
+            margin: 20px auto;
+            position: relative;
+            border-radius: 10px;
+        }
+
+        #box {
+            width: 50px;
+            height: 50px;
+            background: red;
+            position: absolute;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🎯 Tangkap Kotaknya!</h1>
+<p>Skor: <span id="score">0</span></p>
+<p>Waktu: <span id="time">15</span> detik</p>
+
+<div id="gameArea">
+    <div id="box"></div>
+</div>
+
+<button onclick="startGame()">Mulai Game</button>
+
+<script>
+    let score = 0;
+    let timeLeft = 15;
+    let timer;
+    const box = document.getElementById("box");
+    const scoreText = document.getElementById("score");
+    const timeText = document.getElementById("time");
+
+    function moveBox() {
+        const gameArea = document.getElementById("gameArea");
+        const maxX = gameArea.clientWidth - 50;
+        const maxY = gameArea.clientHeight - 50;
+
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        box.style.left = randomX + "px";
+        box.style.top = randomY + "px";
+    }
+
+    box.addEventListener("click", function() {
+        score++;
+        scoreText.innerText = score;
+        moveBox();
+    });
+
+    function startGame() {
+        score = 0;
+        timeLeft = 15;
+        scoreText.innerText = score;
+        timeText.innerText = timeLeft;
+
+        moveBox();
+
+        timer = setInterval(function() {
+            timeLeft--;
+            timeText.innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("Game selesai! Skor kamu: " + score);
+            }
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
